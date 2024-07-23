@@ -22,7 +22,7 @@ object HttpMethod {
   fun invalidatesCache(method: String): Boolean =
     (
       method == "POST" || method == "PATCH" || method == "PUT" ||
-        method == "DELETE" || method == "MOVE"
+        method == "DELETE" || method == "MOVE" || method == "CONNECT"
     )
 
   @JvmStatic // Despite being 'internal', this method is called by popular 3rd party SDKs.
@@ -32,6 +32,9 @@ object HttpMethod {
         method == "PATCH" || method == "PROPPATCH" || // WebDAV
         method == "REPORT"
     )
+
+  fun requiresDuplexRequestBody(method: String): Boolean =
+      method == "CONNECT"
 
   @JvmStatic // Despite being 'internal', this method is called by popular 3rd party SDKs.
   fun permitsRequestBody(method: String): Boolean = !(method == "GET" || method == "HEAD")

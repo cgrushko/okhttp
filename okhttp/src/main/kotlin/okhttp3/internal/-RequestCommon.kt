@@ -113,6 +113,10 @@ fun Request.Builder.commonMethod(
         "method $method must not have a request body."
       }
     }
+    require(HttpMethod.requiresDuplexRequestBody(method) && body?.isDuplex ?? false) {
+      "method $method must have a duplex request body."
+    }
+
     this.method = method
     this.body = body
   }
